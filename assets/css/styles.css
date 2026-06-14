@@ -800,3 +800,74 @@ html.js .hero h1.in .gold::after { transform: scaleX(1); }
   .text-shimmer { animation: none; }
   .grain { animation: none; }
 }
+
+/* ============================================================
+   ПОЛИРОВКА v2 (ui-ux-pro-max): доступность, ритм, микровзаимодействия.
+   Графит+золото и весь контент сохранены — только аккуратные улучшения.
+   ============================================================ */
+
+/* Контраст вторичного текста выше (WCAG AA) */
+:root { --gray-dim: #8B909E; }
+
+/* Видимый фокус для клавиатуры */
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 8px; }
+.btn:focus-visible { outline-offset: 4px; }
+
+/* Фирменные выделение и скроллбар */
+::selection { background: rgba(217, 164, 65, 0.32); color: #fff; }
+html { scrollbar-color: var(--gold) var(--graphite-900); }
+::-webkit-scrollbar { width: 11px; height: 11px; }
+::-webkit-scrollbar-track { background: var(--graphite-900); }
+::-webkit-scrollbar-thumb { background: linear-gradient(var(--gold), var(--gold-deep)); border-radius: 10px; border: 2px solid var(--graphite-900); }
+
+/* Якорная навигация ложится под липкую шапку */
+#problem, #prices, #audience, #how, #law, #reviews, #checklist, #faq, #contacts { scroll-margin-top: 96px; }
+
+/* Аккуратные переносы строк */
+h1, h2 { text-wrap: balance; }
+.lead, .section-head p, .pkg-desc, .card p { text-wrap: pretty; }
+
+/* Моноширинные цифры в ценах */
+.pr-val, .pkg-price, .pkg-old, .price-compare { font-variant-numeric: tabular-nums; }
+
+/* Тонкая золотая грань сверху карточек при наведении */
+.card::after {
+  content: ""; position: absolute; left: 24px; right: 24px; top: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0; transition: opacity 0.45s var(--ease); pointer-events: none;
+}
+.card:hover::after { opacity: 0.85; }
+
+/* Кнопки: лёгкое нажатие + плавность границы */
+.btn { transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease), background 0.3s, color 0.3s, border-color 0.3s; }
+.btn:active { transform: scale(0.975); }
+
+/* Рекомендованный тариф: золотое «стеклянное» свечение */
+.package.featured {
+  background: linear-gradient(180deg, rgba(217, 164, 65, 0.08), var(--graphite-800));
+  box-shadow: 0 0 0 1px rgba(217, 164, 65, 0.55), 0 34px 88px -34px rgba(217, 164, 65, 0.4);
+}
+
+/* Чуть спокойнее бегущая строка */
+.marquee-track { animation-duration: 42s; }
+
+/* Подсказка прокрутки в hero */
+.scroll-hint {
+  display: inline-flex; align-items: center; gap: 13px; margin-top: 40px;
+  color: var(--gray); font-size: 12px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase;
+  transition: color 0.3s;
+}
+.scroll-hint:hover { color: var(--gold); }
+.scroll-hint .sh-mouse {
+  width: 22px; height: 34px; border: 1.5px solid var(--line); border-radius: 12px;
+  display: inline-flex; justify-content: center; padding-top: 6px; transition: border-color 0.3s;
+}
+.scroll-hint:hover .sh-mouse { border-color: var(--gold); }
+.scroll-hint .sh-wheel { width: 3px; height: 7px; border-radius: 2px; background: var(--gold); animation: shWheel 1.9s var(--ease) infinite; }
+@keyframes shWheel {
+  0% { opacity: 0; transform: translateY(-5px); }
+  30% { opacity: 1; } 70% { opacity: 1; transform: translateY(6px); }
+  100% { opacity: 0; transform: translateY(9px); }
+}
+@media (max-width: 760px) { .scroll-hint { display: none; } }
+@media (prefers-reduced-motion: reduce) { .scroll-hint .sh-wheel { animation: none; } }

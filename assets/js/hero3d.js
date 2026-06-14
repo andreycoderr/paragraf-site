@@ -176,7 +176,7 @@
     const target = finePtr
       ? Math.max(0, Math.min(P, (0.5 + pointer.tx) * P))
       : (0.5 - 0.5 * Math.cos(t * 0.5)) * P;     // если мыши нет — мягкое авто
-    flipPos += (target - flipPos) * 0.09;
+    flipPos += (target - flipPos) * 0.038;   // мягче и медленнее следует за курсором
     const fi = Math.min(P - 1, Math.floor(flipPos));
     const pr = flipPos - fi;
     flips.forEach((p, i) => {
