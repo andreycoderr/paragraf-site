@@ -884,6 +884,17 @@ h1, h2 { text-wrap: balance; }
   background: radial-gradient(68% 70% at 26% 42%, rgba(11, 12, 17, 0.9) 0%, rgba(11, 12, 17, 0.45) 46%, transparent 72%);
 }
 @media (max-width: 760px) { .hero .container::before { display: none; } }
+
+/* Мобайл: убираем выход блоков за экран (длинные кнопки переносятся,
+   крупная цифра штрафа уменьшается, строки юр-блока складываются). */
+@media (max-width: 760px) {
+  .btn { white-space: normal; }                 /* длинный текст кнопок переносится, а не вылезает */
+  .law { padding: 30px 22px; }
+  .law .law-grid { gap: 26px; }
+  .law .fine { font-size: clamp(2.1rem, 11vw, 3.4rem); }
+  .law li { flex-direction: column; gap: 5px; }
+  .law li b { display: block; }
+}
 @keyframes morphBlob {
   0%, 100% { border-radius: 42% 58% 55% 45% / 52% 44% 56% 48%; transform: translate(0, 0) rotate(0deg) scale(1); }
   33% { border-radius: 60% 40% 45% 58% / 55% 52% 48% 45%; transform: translate(26px, -18px) rotate(10deg) scale(1.06); }
