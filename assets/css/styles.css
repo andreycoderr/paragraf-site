@@ -380,15 +380,23 @@ p { margin: 0 0 1em; color: var(--gray); }
 
 /* ---------- Цены ---------- */
 .pricing-list {
-  border-top: 1px solid var(--hairline);
-  margin-bottom: 30px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.012));
+  backdrop-filter: blur(16px) saturate(120%);
+  -webkit-backdrop-filter: blur(16px) saturate(120%);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 20px;
+  padding: 6px 26px;
+  margin-bottom: 0;
+  position: relative; z-index: 1;
+  box-shadow: 0 20px 50px -30px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 .price-row {
   display: flex; align-items: center; justify-content: space-between; gap: 20px;
-  padding: 20px 4px;
+  padding: 18px 6px;
   border-bottom: 1px solid var(--hairline);
   transition: padding-left 0.3s var(--ease), background 0.3s;
 }
+.price-row:last-child { border-bottom: 0; }
 .price-row:hover { padding-left: 16px; background: linear-gradient(90deg, rgba(217,164,65,0.06), transparent); }
 .price-row .pr-name { font-size: 1.1rem; color: var(--cream); font-weight: 600; }
 .price-row .pr-name small { display: block; font-weight: 400; font-size: 0.85rem; color: var(--gray-dim); margin-top: 2px; }
@@ -396,15 +404,19 @@ p { margin: 0 0 1em; color: var(--gray); }
 
 .packages { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
 .package {
-  background: linear-gradient(180deg, #1a1d27, var(--graphite-800));
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: 30px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.018));
+  backdrop-filter: blur(22px) saturate(125%);
+  -webkit-backdrop-filter: blur(22px) saturate(125%);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 22px;
+  padding: 32px;
   position: relative;
   overflow: hidden;
-  transition: transform 0.4s var(--ease), box-shadow 0.4s;
+  z-index: 1;
+  box-shadow: 0 24px 60px -30px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease), border-color 0.5s, background 0.5s;
 }
-.package:hover { transform: translateY(-6px); box-shadow: var(--shadow-card); }
+.package:hover { transform: translateY(-8px); border-color: rgba(255, 255, 255, 0.16); box-shadow: 0 40px 90px -36px rgba(0, 0, 0, 0.82), inset 0 1px 0 rgba(255, 255, 255, 0.10); }
 .package.featured { border-color: var(--gold); }
 .package.featured::after {
   content: "Выгодно"; position: absolute; top: 18px; right: -34px;
@@ -842,10 +854,39 @@ h1, h2 { text-wrap: balance; }
 .btn { transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease), background 0.3s, color 0.3s, border-color 0.3s; }
 .btn:active { transform: scale(0.975); }
 
-/* Рекомендованный тариф: золотое «стеклянное» свечение */
+/* Рекомендованный тариф: золотое «жидкое стекло» */
 .package.featured {
-  background: linear-gradient(180deg, rgba(217, 164, 65, 0.08), var(--graphite-800));
-  box-shadow: 0 0 0 1px rgba(217, 164, 65, 0.55), 0 34px 88px -34px rgba(217, 164, 65, 0.4);
+  background: linear-gradient(180deg, rgba(217, 164, 65, 0.14), rgba(255, 255, 255, 0.02));
+  border-color: rgba(217, 164, 65, 0.5);
+  box-shadow: 0 0 0 1px rgba(217, 164, 65, 0.5), 0 36px 90px -34px rgba(217, 164, 65, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* ===== Liquid-glass: морфящиеся золотые «капли» за hero и ценами ===== */
+#prices { position: relative; }
+#prices > .container { position: relative; z-index: 1; }
+.price-blob, .hero-blob {
+  position: absolute; z-index: 0; pointer-events: none;
+  width: 460px; height: 460px; filter: blur(72px); opacity: 0.22;
+  background: radial-gradient(circle at 50% 50%, var(--gold), transparent 68%);
+  border-radius: 42% 58% 55% 45% / 52% 44% 56% 48%;
+  animation: morphBlob 16s ease-in-out infinite;
+  will-change: transform, border-radius;
+}
+.price-blob.b1 { top: 6%; right: 5%; }
+.price-blob.b2 { bottom: 3%; left: 1%; width: 380px; height: 380px; opacity: 0.16; animation-delay: -6s; background: radial-gradient(circle, rgba(120, 150, 220, 0.5), transparent 70%); }
+.hero-blob.b1 { top: 14%; right: 16%; width: 540px; height: 540px; opacity: 0.16; }
+.hero-blob.b2 { bottom: 8%; right: 34%; width: 360px; height: 360px; opacity: 0.12; animation-delay: -8s; background: radial-gradient(circle, rgba(120, 150, 220, 0.5), transparent 70%); }
+@keyframes morphBlob {
+  0%, 100% { border-radius: 42% 58% 55% 45% / 52% 44% 56% 48%; transform: translate(0, 0) rotate(0deg) scale(1); }
+  33% { border-radius: 60% 40% 45% 58% / 55% 52% 48% 45%; transform: translate(26px, -18px) rotate(10deg) scale(1.06); }
+  66% { border-radius: 45% 55% 62% 38% / 46% 56% 44% 54%; transform: translate(-20px, 22px) rotate(-8deg) scale(0.96); }
+}
+@media (max-width: 760px) {
+  .package, .pricing-list { backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+  .price-blob, .hero-blob { filter: blur(54px); opacity: 0.13; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .price-blob, .hero-blob { animation: none; }
 }
 
 /* Чуть спокойнее бегущая строка */

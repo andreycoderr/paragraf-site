@@ -107,16 +107,17 @@
     });
   });
 
-  /* ---------- Счётчик-анимация (штраф 300 000 ₽) ---------- */
+  /* ---------- Счётчик штрафа: цифры набираются от 0 при появлении блока ---------- */
   const counters = Array.prototype.slice.call(document.querySelectorAll("[data-count]"));
   if (counters.length) {
     const format = (n) => n.toLocaleString("ru-RU");
     const run = (el) => {
-      if (el.dataset.done) return;
-      el.dataset.done = "1";
+      if (el.dataset.animating === "1") return;
       const target = parseInt(el.getAttribute("data-count"), 10);
       if (reduceMotion) { el.textContent = format(target); return; }
-      const dur = 1600;
+      el.dataset.animating = "1";
+      el.textContent = "0";
+      const dur = 2000;
       let start = null;
       const step = (ts) => {
         if (!start) start = ts;
@@ -124,29 +125,26 @@
         const eased = 1 - Math.pow(1 - p, 3);
         el.textContent = format(Math.round(target * eased));
         if (p < 1) requestAnimationFrame(step);
+        else el.dataset.animating = "";
       };
       requestAnimationFrame(step);
     };
     if ("IntersectionObserver" in window) {
+      // перезапуск каждый раз, когда блок снова появляется во вьюпорте
       const cio = new IntersectionObserver(
-        (entries) => entries.forEach((e) => { if (e.isIntersecting) { run(e.target); cio.unobserve(e.target); } }),
-        { threshold: 0.5 }
+        (entries) => entries.forEach((e) => { if (e.isIntersecting) run(e.target); }),
+        { threshold: 0.6 }
       );
       counters.forEach((el) => cio.observe(el));
+    } else {
+      const csweep = () => {
+        const vh = window.innerHeight || document.documentElement.clientHeight;
+        counters.forEach((el) => { const r = el.getBoundingClientRect(); if (r.top < vh * 0.85 && r.bottom > 0) run(el); });
+      };
+      window.addEventListener("scroll", csweep, { passive: true });
+      window.addEventListener("load", csweep);
+      csweep();
     }
-    // Резерв: запускаем счётчик, когда он во вьюпорте (на случай нестабильного IO).
-    const csweep = () => {
-      const vh = window.innerHeight || document.documentElement.clientHeight;
-      counters.forEach((el) => {
-        if (!el.dataset.done) {
-          const r = el.getBoundingClientRect();
-          if (r.top < vh * 0.85 && r.bottom > 0) run(el);
-        }
-      });
-    };
-    window.addEventListener("scroll", csweep, { passive: true });
-    window.addEventListener("load", csweep);
-    csweep();
   }
 
   /* ---------- Форма заявки: оба согласия включают кнопку ---------- */
