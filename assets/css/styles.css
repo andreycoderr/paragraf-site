@@ -50,7 +50,7 @@
 *::before,
 *::after { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
@@ -120,7 +120,7 @@ button { font-family: inherit; cursor: pointer; }
 }
 
 /* Плавающие § + canvas с золотой пылью */
-#dust { position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0.7; }
+#dust { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; opacity: 0.7; }
 .float-paragraphs { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
 .float-paragraphs span {
   position: absolute;
@@ -303,7 +303,7 @@ p { margin: 0 0 1em; color: var(--gray); }
 .mobile-menu .mm-cta { margin-top: auto; padding-top: 30px; }
 
 /* ---------- Hero ---------- */
-.hero { padding-top: 168px; padding-bottom: 132px; position: relative; }
+.hero { padding-top: 168px; padding-bottom: 132px; position: relative; overflow: hidden; }
 /* 3D-сцена hero (Three.js) — за текстом, поверх фоновой §, клики не перехватывает.
    Маска гасит сцену слева (под заголовком) и снизу (под строкой преимуществ). */
 #hero-3d {
@@ -862,7 +862,7 @@ h1, h2 { text-wrap: balance; }
 }
 
 /* ===== Liquid-glass: морфящиеся золотые «капли» за hero и ценами ===== */
-#prices { position: relative; }
+#prices { position: relative; overflow: hidden; }
 #prices > .container { position: relative; z-index: 1; }
 .price-blob, .hero-blob {
   position: absolute; z-index: 0; pointer-events: none;
