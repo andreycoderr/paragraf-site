@@ -150,14 +150,15 @@
   window.addEventListener("resize", layout);
 
   const pointer = { x: 0, y: 0, tx: 0, ty: 0 };
-  if (window.matchMedia("(pointer:fine)").matches) {
+  const finePtr = window.matchMedia("(pointer:fine)").matches;
+  if (finePtr) {
     window.addEventListener("mousemove", (e) => {
       pointer.tx = e.clientX / window.innerWidth - 0.5;
       pointer.ty = e.clientY / window.innerHeight - 0.5;
     }, { passive: true });
   }
 
-  const TURN = 1.5; // сек на один переворот
+  let flipPos = 0;          // «сколько страниц перевёрнуто» — следует за курсором
   const clock = new THREE.Clock();
   let raf = null;
   function frame() {
@@ -170,11 +171,14 @@
 
     book.position.y = Math.sin(t * 0.5) * 0.08;
 
-    // одна страница в любой момент времени переворачивается → нет столкновений
-    const ph = (t / TURN) % (2 * P);
-    const tp = ph <= P ? ph : (2 * P - ph);   // 0..P..0 (туда и обратно, плавно)
-    const fi = Math.min(P - 1, Math.floor(tp));
-    const pr = tp - fi;
+    // листание следует за курсором: положение X → сколько страниц перевёрнуто.
+    // в любой момент переворачивается лишь одна страница → без столкновений.
+    const target = finePtr
+      ? Math.max(0, Math.min(P, (0.5 + pointer.tx) * P))
+      : (0.5 - 0.5 * Math.cos(t * 0.5)) * P;     // если мыши нет — мягкое авто
+    flipPos += (target - flipPos) * 0.09;
+    const fi = Math.min(P - 1, Math.floor(flipPos));
+    const pr = flipPos - fi;
     flips.forEach((p, i) => {
       const prog = i < fi ? 1 : (i > fi ? 0 : pr);
       const eased = prog * prog * (3 - 2 * prog);
