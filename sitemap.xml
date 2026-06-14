@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://{{ДОМЕН}}/</loc><priority>1.0</priority></url>
-  <url><loc>https://{{ДОМЕН}}/privacy.html</loc><priority>0.6</priority></url>
-  <url><loc>https://{{ДОМЕН}}/consent.html</loc><priority>0.5</priority></url>
-  <url><loc>https://{{ДОМЕН}}/offer.html</loc><priority>0.5</priority></url>
-  <url><loc>https://{{ДОМЕН}}/cookie.html</loc><priority>0.4</priority></url>
+  <url><loc>https://paragraf-doc.ru/</loc><priority>1.0</priority></url>
+  <url><loc>https://paragraf-doc.ru/privacy.html</loc><priority>0.6</priority></url>
+  <url><loc>https://paragraf-doc.ru/consent.html</loc><priority>0.5</priority></url>
+  <url><loc>https://paragraf-doc.ru/offer.html</loc><priority>0.5</priority></url>
+  <url><loc>https://paragraf-doc.ru/cookie.html</loc><priority>0.4</priority></url>
 </urlset>

@@ -309,11 +309,11 @@ p { margin: 0 0 1em; color: var(--gray); }
 #hero-3d {
   position: absolute; inset: 0; z-index: 1; pointer-events: none;
   -webkit-mask-image:
-    linear-gradient(90deg, transparent 0%, transparent 30%, #000 58%, #000 100%),
+    linear-gradient(90deg, transparent 0%, transparent 40%, #000 68%, #000 100%),
     linear-gradient(180deg, #000 0%, #000 56%, transparent 86%);
   -webkit-mask-composite: source-in;
   mask-image:
-    linear-gradient(90deg, transparent 0%, transparent 30%, #000 58%, #000 100%),
+    linear-gradient(90deg, transparent 0%, transparent 40%, #000 68%, #000 100%),
     linear-gradient(180deg, #000 0%, #000 56%, transparent 86%);
   mask-composite: intersect;
 }
@@ -876,6 +876,13 @@ h1, h2 { text-wrap: balance; }
 .price-blob.b2 { bottom: 3%; left: 1%; width: 380px; height: 380px; opacity: 0.16; animation-delay: -6s; background: radial-gradient(circle, rgba(120, 150, 220, 0.5), transparent 70%); }
 .hero-blob.b1 { top: 14%; right: 16%; width: 540px; height: 540px; opacity: 0.16; }
 .hero-blob.b2 { bottom: 8%; right: 34%; width: 360px; height: 360px; opacity: 0.12; animation-delay: -8s; background: radial-gradient(circle, rgba(120, 150, 220, 0.5), transparent 70%); }
+/* Тёмная подложка под текстом hero — чтобы он не сливался с 3D-документами */
+.hero .container::before {
+  content: ""; position: absolute; z-index: -1; pointer-events: none;
+  top: -50px; bottom: -30px; left: -50px; right: 24%;
+  background: linear-gradient(100deg, var(--graphite-900) 6%, rgba(11, 12, 17, 0.86) 40%, rgba(11, 12, 17, 0) 80%);
+}
+@media (max-width: 760px) { .hero .container::before { display: none; } }
 @keyframes morphBlob {
   0%, 100% { border-radius: 42% 58% 55% 45% / 52% 44% 56% 48%; transform: translate(0, 0) rotate(0deg) scale(1); }
   33% { border-radius: 60% 40% 45% 58% / 55% 52% 48% 45%; transform: translate(26px, -18px) rotate(10deg) scale(1.06); }

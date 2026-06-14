@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://{{ДОМЕН}}/sitemap.xml
+Sitemap: https://paragraf-doc.ru/sitemap.xml
