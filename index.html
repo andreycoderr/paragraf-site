@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Помечаем, что JS работает: до этого .reveal-контент остаётся видимым (graceful degradation) -->
+  <script>document.documentElement.className += " js";</script>
+  <title>Параграф — документы, которые защищают репетитора</title>
+  <meta name="description" content="Готовые правовые документы для онлайн-репетиторов: оферта, согласие на ПДн, политика, уведомление в Роскомнадзор и другие документы. Готовим индивидуально под Вас — вы работаете спокойно." />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Параграф — документы, которые защищают репетитора" />
+  <meta property="og:description" content="Оферта, согласие на ПДн, политика и уведомление в РКН — собрано под нишу репетитора." />
+  <meta property="og:image" content="assets/img/og-cover.png" />
+  <meta property="og:url" content="https://{{ДОМЕН}}/" />
+  <meta name="theme-color" content="#0B0C11" />
+
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg" />
+  <link rel="apple-touch-icon" href="assets/img/avatar.png" />
+  <link rel="canonical" href="https://{{ДОМЕН}}/" />
+
+  <!-- Шрифты (с надёжным fallback в CSS, если Google Fonts недоступны) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Montserrat:wght@400;500;600;700;800&display=swap&subset=cyrillic,cyrillic-ext,latin" rel="stylesheet" />
+
+  <link rel="stylesheet" href="assets/css/styles.css" />
+
+  <!-- 3D-сцена (Three.js с CDN). Если сети нет — сайт работает без неё. -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+</head>
+<body>
+  <!-- Премиум-слой: прогресс прокрутки, зерно, кастомный курсор -->
+  <div class="scroll-progress" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"></div>
+
+  <!-- Живой фон -->
+  <div class="bg-layers"></div>
+  <div class="bg-grid"></div>
+  <div class="bg-orb a"></div>
+  <div class="bg-orb b"></div>
+  <canvas id="dust"></canvas>
+  <div class="float-paragraphs"></div>
+
+  <!-- Шапка -->
+  <header class="header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Параграф — на главную">
+        <span class="mark">§</span>
+        <span class="word">ПАРАГРАФ</span>
+      </a>
+      <nav class="nav">
+        <a href="#prices">Цены</a>
+        <a href="#audience">Для кого</a>
+        <a href="#how">Как заказать</a>
+        <a href="#law">Почему важно</a>
+        <a href="#faq">Вопросы</a>
+      </nav>
+      <div class="header-cta">
+        <a class="btn btn-gold" href="https://t.me/paragrafdocbot" target="_blank" rel="noopener">
+          Подобрать в Telegram <span class="ico">→</span>
+        </a>
+        <button class="burger" aria-label="Меню">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Мобильное меню -->
+  <div class="mobile-menu">
+    <div class="mm-top">
+      <a class="brand" href="index.html"><span class="mark">§</span><span class="word">ПАРАГРАФ</span></a>
+      <button class="burger" data-close aria-label="Закрыть">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <nav>
+      <a href="#prices">Цены <span class="gold">§</span></a>
+      <a href="#audience">Для кого <span class="gold">§</span></a>
+      <a href="#how">Как заказать <span class="gold">§</span></a>
+      <a href="#law">Почему важно <span class="gold">§</span></a>
+      <a href="#faq">Вопросы <span class="gold">§</span></a>
+    </nav>
+    <div class="mm-cta">
+      <a class="btn btn-gold btn-block btn-lg" href="https://t.me/paragrafdocbot" target="_blank" rel="noopener">Подобрать в Telegram →</a>
+    </div>
+  </div>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div id="hero-3d" aria-hidden="true"></div>
+      <div class="hero-watermark" aria-hidden="true">§</div>
+      <div class="container">
+        <p class="eyebrow reveal">Экспертная защита Вашей работы</p>
+        <h1 class="reveal reveal-d1">Документы, которые <span class="gold text-shimmer">защищают</span></h1>
+        <p class="lead reveal reveal-d2">
+          Оферта, согласие на ПДн, политика, уведомление в Роскомнадзор и другие документы —
+          готовый пакет юриста под вашу нишу. Готовим индивидуально под Вас — вы работаете спокойно.
+        </p>
+        <div class="hero-actions reveal reveal-d3">
+          <a class="btn btn-gold btn-lg" href="https://t.me/paragrafdocbot" target="_blank" rel="noopener">
+            Подобрать в Telegram <span class="ico">→</span>
+          </a>
+          <a class="btn btn-ghost btn-lg" href="#prices">Смотреть цены</a>
+        </div>
+        <ul class="hero-trust reveal reveal-d4">
+          <li>Готовые документы юриста</li>
+          <li>Шаблоны и документы на заказ</li>
+          <li>Без шаблонов из интернета</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- БЕГУЩАЯ СТРОКА -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>Договор-оферта</span><span>Согласие на ПДн</span><span>Политика конфиденциальности</span><span>Уведомление в РКН</span><span>152-ФЗ</span><span>Защита репетитора</span>
+        <span>Договор-оферта</span><span>Согласие на ПДн</span><span>Политика конфиденциальности</span><span>Уведомление в РКН</span><span>152-ФЗ</span><span>Защита репетитора</span>
+      </div>
+    </div>
+
+    <!-- БОЛЬ -->
+    <section id="problem" class="section-tight">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="eyebrow">Знакомо?</p>
+          <h2>Одна претензия — и месяц работы под вопросом</h2>
+          <p>Без документов любой спор с клиентом вы ведёте «на словах». А слова в суде и в переписке с Роскомнадзором не работают.</p>
+        </div>
+        <div class="grid grid-4">
+          <article class="card reveal">
+            <div class="card-ico">₽</div>
+            <h3>Требуют вернуть деньги</h3>
+            <p>«Ребёнку не подошло» — и родитель просит возврат за весь курс. Без оферты доказать условия нечем.</p>
+          </article>
+          <article class="card reveal reveal-d1">
+            <div class="card-ico">!</div>
+            <h3>Претензии родителей</h3>
+            <p>Спор о расписании, переносах и результате превращается в конфликт без понятных правил игры.</p>
+          </article>
+          <article class="card reveal reveal-d2">
+            <div class="card-ico">§</div>
+            <h3>Штраф Роскомнадзора</h3>
+            <p>Берёте имя и телефон ученика — вы оператор ПДн. Без уведомления в РКН это штраф.</p>
+          </article>
+          <article class="card reveal reveal-d3">
+            <div class="card-ico">⚑</div>
+            <h3>Жалоба и блокировка</h3>
+            <p>Одно обращение недовольного клиента в надзор — и проверка приходит именно к вам.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ЦЕНЫ -->
+    <section id="prices">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="eyebrow">Цены и пакеты</p>
+          <h2>Сколько стоит <span class="gold">спокойствие</span></h2>
+          <p>Полный комплект документов по персональным данным для самозанятого. Берите пакетом со скидкой — или любой документ по отдельности.</p>
+        </div>
+
+        <div class="reveal">
+          <div class="pricing-list">
+            <div class="price-row">
+              <div class="pr-name">Политика конфиденциальности <small>основной документ, обязателен к публикации по 152-ФЗ</small></div>
+              <div class="pr-val">1 200 ₽</div>
+            </div>
+            <div class="price-row">
+              <div class="pr-name">Согласие на обработку ПДн <small>законный сбор имени и контактов</small></div>
+              <div class="pr-val">900 ₽</div>
+            </div>
+            <div class="price-row">
+              <div class="pr-name">Публичная оферта <small>условия продажи и оказания услуг</small></div>
+              <div class="pr-val">1 500 ₽</div>
+            </div>
+            <div class="price-row">
+              <div class="pr-name">Регламент обработки обращений <small>внутренний порядок ответов на запросы субъектов</small></div>
+              <div class="pr-val">1 200 ₽</div>
+            </div>
+            <div class="price-row">
+              <div class="pr-name">Политика использования cookie <small>для сайта с формами и аналитикой</small></div>
+              <div class="pr-val">800 ₽</div>
+            </div>
+            <div class="price-row">
+              <div class="pr-name">Согласие на рекламную рассылку <small>для писем и сообщений клиентам</small></div>
+              <div class="pr-val">600 ₽</div>
+            </div>
+            <div class="price-row">
+              <div class="pr-name">Форма запроса субъекта ПДн <small>шаблон обращения за своими данными</small></div>
+              <div class="pr-val">600 ₽</div>
+            </div>
+            <div class="price-row">
+              <div class="pr-name">Форма отзыва согласия <small>шаблон отзыва согласия на обработку</small></div>
+              <div class="pr-val">600 ₽</div>
+            </div>
+            <div class="price-row">
+              <div class="pr-name">Акт об уничтожении ПДн <small>фиксирует удаление данных по закону</small></div>
+              <div class="pr-val">700 ₽</div>
+            </div>
+            <div class="price-row">
+              <div class="pr-name">Журнал учёта обращений <small>регистрация обращений субъектов ПДн</small></div>
+              <div class="pr-val">700 ₽</div>
+            </div>
+          </div>
+          <p class="price-compare">По отдельности — <b>8 800 ₽</b>. В пакете — <b class="gold">5 500 ₽</b>. Ваша выгода — 3 300 ₽.</p>
+        </div>
+
+        <div class="rule reveal" style="margin: 28px 0 30px;"></div>
+
+        <div class="grid grid-3">
+          <article class="package reveal">
+            <div class="pkg-name">Пакет «Все документы»</div>
+            <div class="pkg-desc">Полный комплект для самостоятельного оформления.</div>
+            <div class="pkg-price">5 500 ₽</div>
+            <div class="pkg-old">8 800 ₽ по отдельности</div>
+            <ul>
+              <li>Все 10 документов по ПДн</li>
+              <li>Готовые шаблоны с удобными пропусками</li>
+              <li>Инструкция по заполнению документов</li>
+              <li>Экономия 3 300 ₽</li>
+            </ul>
+            <a class="btn btn-ghost btn-block" href="https://t.me/paragrafdocbot" target="_blank" rel="noopener">Выбрать пакет</a>
+          </article>
+
+          <article class="package featured reveal reveal-d1">
+            <div class="pkg-name">Пакет + Роскомнадзор</div>
+            <div class="pkg-desc">Документы и помощь с уведомлением в РКН.</div>
+            <div class="pkg-price">6 500 ₽</div>
+            <div class="pkg-old">10 300 ₽ по отдельности</div>
+            <ul>
+              <li>Все 10 документов по ПДн + инструкция</li>
+              <li>Индивидуальная инструкция по заполнению уведомления в Роскомнадзор</li>
+              <li>Экономия 3 800 ₽</li>
+            </ul>
+            <a class="btn btn-gold btn-block" href="https://t.me/paragrafdocbot" target="_blank" rel="noopener">Выбрать пакет + РКН →</a>
+          </article>
+
+          <article class="package reveal reveal-d2">
+            <div class="pkg-name">Под ключ</div>
+            <div class="pkg-desc">Мы заполняем все документы за вас.</div>
+            <div class="pkg-price">По запросу</div>
+            <div class="pkg-old plain">согласуем в Telegram</div>
+            <ul>
+              <li>Документы заполняют наши юристы</li>
+              <li>Готовый комплект под ваши реквизиты</li>
+              <li>Инструкция по уведомлению в РКН</li>
+            </ul>
+            <a class="btn btn-ghost btn-block" href="https://t.me/paragrafdocbot" target="_blank" rel="noopener">Обсудить в Telegram</a>
+          </article>
+        </div>
+        <p class="price-note reveal">Не уверены, что нужно именно вам? Нажмите «<span class="gold">Подобрать в Telegram</span>» — поможем собрать комплект.</p>
+      </div>
+    </section>
+
+    <!-- ДЛЯ КОГО -->
+    <section id="audience" class="section-tight">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="eyebrow">Для кого</p>
+          <h2>Если вы берёте оплату и контакты учеников — это для вас</h2>
+        </div>
+        <div class="grid grid-3">
+          <article class="card audience-card reveal">
+            <div class="card-ico">A</div>
+            <h3>Репетиторы и преподаватели</h3>
+            <p>Частные занятия онлайн и очно, подготовка к ОГЭ/ЕГЭ, языки, музыка, любые предметы.</p>
+          </article>
+          <article class="card audience-card reveal reveal-d1">
+            <div class="card-ico">B</div>
+            <h3>Онлайн-школы и курсы</h3>
+            <p>Продаёте доступ к урокам или курсам, ведёте группы — нужна оферта и работа с ПДн по закону.</p>
+          </article>
+          <article class="card audience-card reveal reveal-d2">
+            <div class="card-ico">C</div>
+            <h3>Психологи и эксперты</h3>
+            <p>Консультации, наставничество, личный приём заявок — те же требования 152-ФЗ.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- КАК ЗАКАЗАТЬ -->
+    <section id="how">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="eyebrow">Как заказать</p>
+          <h2>Три шага — и документы у вас</h2>
+        </div>
+        <div class="steps">
+          <article class="step card reveal">
+            <span class="connector"></span>
+            <div class="num">01</div>
+            <h3>Откройте Telegram-бота</h3>
+            <p>Нажмите «Подобрать в Telegram» и ответьте на пару вопросов о вашей работе.</p>
+          </article>
+          <article class="step card reveal reveal-d1">
+            <span class="connector"></span>
+            <div class="num">02</div>
+            <h3>Подбираем комплект</h3>
+            <p>Под вашу нишу и статус (самозанятый / ИП): что обязательно, а что — по желанию.</p>
+          </article>
+          <article class="step card reveal reveal-d2">
+            <div class="num">03</div>
+            <h3>Получаете готовый файл</h3>
+            <p>Документы с вашими реквизитами — публикуете политику и работаете спокойно.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ПОЧЕМУ ВАЖНО (юр-блок) -->
+    <section id="law">
+      <div class="container">
+        <div class="law reveal">
+          <div class="law-grid">
+            <div>
+              <span class="tag">Закон · факт</span>
+              <div class="fine">до <span class="fine-num"><span class="fine-sizer" aria-hidden="true">300 000</span><span class="fine-count" data-count="300000">0</span></span> <small>₽</small></div>
+              <p class="fine-label">штраф за обработку персональных данных без уведомления Роскомнадзора.</p>
+            </div>
+            <div>
+              <ul>
+                <li><b>Вы — оператор ПДн.</b> Как только берёте имя, телефон или e-mail ученика, на вас распространяется 152-ФЗ.</li>
+                <li><b>Уведомление в РКН — обязательно.</b> Подаётся оператором до начала обработки данных.</li>
+                <li><b>Политику нужно опубликовать.</b> Постоянная открытая ссылка на сайте — обязательное условие.</li>
+                <li><b>Ответственность ужесточена.</b> Размеры штрафов по ст. 13.11 КоАП РФ усилены с 30.05.2025.</li>
+              </ul>
+              <a class="btn btn-gold" href="https://t.me/paragrafdocbot" target="_blank" rel="noopener" style="margin-top:22px;">Закрыть вопрос с документами →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ОТЗЫВЫ -->
+    <section id="reviews" class="section-tight">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="eyebrow">Отзывы</p>
+          <h2>Спокойно — это когда документы уже есть</h2>
+        </div>
+        <div class="grid grid-3">
+          <article class="card review-card reveal">
+            <div class="quote">“</div>
+            <div class="stars">★★★★★</div>
+            <p>Боялась штрафа РКН — принимала оплату без документов. Купила пакет и за вечер заполнила всё по инструкции. Теперь работаю спокойно.</p>
+            <div class="who">
+              <span class="ava">М</span>
+              <div><b>Мария К.</b><span>репетитор по английскому</span></div>
+            </div>
+          </article>
+          <article class="card review-card reveal reveal-d1">
+            <div class="quote">“</div>
+            <div class="stars">★★★★★</div>
+            <p>Брал пакет с РКН. Инструкция пошаговая — подал уведомление сам за полчаса, без юриста. Очень выручили с документами.</p>
+            <div class="who">
+              <span class="ava">Д</span>
+              <div><b>Дмитрий С.</b><span>онлайн-школа математики</span></div>
+            </div>
+          </article>
+          <article class="card review-card reveal reveal-d2">
+            <div class="quote">“</div>
+            <div class="stars">★★★★★</div>
+            <p>Заказала «под ключ» — всё заполнили за меня и прислали готовый комплект. Не пришлось вникать в законы. Рекомендую!</p>
+            <div class="who">
+              <span class="ava">А</span>
+              <div><b>Анна В.</b><span>психолог-консультант</span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ЛИД-МАГНИТ + ФОРМА -->
+    <section id="checklist">
+      <div class="container">
+        <div class="lead-block reveal">
+          <div class="lead-grid">
+            <div>
+              <p class="eyebrow">Бесплатно</p>
+              <h2>Чек-лист: какие документы нужны репетитору</h2>
+              <p class="lead">Короткий разбор: что обязательно по закону, что — по желанию, и с чего начать,
+                чтобы не получить штраф. Пришлём в Telegram.</p>
+              <a class="btn btn-gold btn-lg" href="https://t.me/paragrafdocbot" target="_blank" rel="noopener" style="margin-top:8px;">
+                Получить чек-лист в Telegram <span class="ico">→</span>
+              </a>
+            </div>
+
+            <!-- Необязательная форма-заявка. ПДн на сайте НЕ хранятся: заявка
+                 открывает Telegram-бота. Чекбокс согласия — обязателен (152-ФЗ),
+                 кнопка неактивна, пока галочка не стоит. -->
+            <form data-lead-form data-tg="https://t.me/paragrafdocbot" novalidate>
+              <div class="form-field">
+                <label for="f-name">Как вас зовут</label>
+                <input id="f-name" name="name" type="text" placeholder="Имя" autocomplete="name" required />
+              </div>
+              <div class="form-field">
+                <label for="f-contact">Telegram или телефон</label>
+                <input id="f-contact" name="contact" type="text" placeholder="@username или +7…" required />
+              </div>
+              <div class="consent-group">
+                <div class="consent">
+                  <input id="f-consent-pdn" type="checkbox" data-consent />
+                  <label for="f-consent-pdn">
+                    Я даю <a href="consent.html" target="_blank">согласие на обработку персональных данных</a>.
+                  </label>
+                </div>
+                <div class="consent">
+                  <input id="f-consent-policy" type="checkbox" data-consent />
+                  <label for="f-consent-policy">
+                    Я ознакомлен(а) и принимаю <a href="privacy.html" target="_blank">Политику конфиденциальности</a>.
+                  </label>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-gold btn-block" data-submit disabled>Отправить заявку →</button>
+              <p class="form-ok">Спасибо! Открываем Telegram — продолжим там.</p>
+              <p class="form-hint">Нажимая кнопку, вы переходите в Telegram-бота. Данные с сайта никуда не сохраняются.</p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq">
+      <div class="container">
+        <div class="section-head reveal" style="text-align:center; margin-left:auto; margin-right:auto;">
+          <p class="eyebrow" style="justify-content:center;">Вопросы</p>
+          <h2>Частые вопросы</h2>
+        </div>
+        <div class="faq reveal">
+          <div class="faq-item">
+            <button class="faq-q">Я самозанятый. Мне вообще нужны эти документы? <span class="plus"></span></button>
+            <div class="faq-a"><div class="faq-a-inner"><p>Да. Налоговый статус (самозанятый, ИП) не отменяет 152-ФЗ. Как только вы берёте имя и контакт ученика — вы оператор персональных данных, и нужны согласие, политика и уведомление в РКН.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">Сколько ждать готовые документы? <span class="plus"></span></button>
+            <div class="faq-a"><div class="faq-a-inner"><p>Обычно в течение дня после того, как вы пришлёте реквизиты. Точный срок назовём в Telegram под ваш комплект.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">Можно ли вернуть деньги, если документ не подошёл? <span class="plus"></span></button>
+            <div class="faq-a"><div class="faq-a-inner"><p>Условия возврата описаны в <a href="offer.html" style="color:var(--gold);text-decoration:underline;">оферте</a>. Это цифровой продукт, поэтому правила возврата отличаются от обычных товаров — всё прозрачно прописано.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">Я работаю с детьми. Есть нюансы по согласию? <span class="plus"></span></button>
+            <div class="faq-a"><div class="faq-a-inner"><p>Да: за несовершеннолетних согласие на обработку ПДн даёт родитель или законный представитель. Это учтено в формулировках документов.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">Вы сами подаёте уведомление в Роскомнадзор? <span class="plus"></span></button>
+            <div class="faq-a"><div class="faq-a-inner"><p>Мы готовим уведомление и данные для подачи. Подаёте вы — на портале Роскомнадзора, от своего имени как оператор. Подскажем, что и куда вписать.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">Это типовые шаблоны из интернета? <span class="plus"></span></button>
+            <div class="faq-a"><div class="faq-a-inner"><p>Нет. Это документы, подготовленные юристом под нишу репетитора, в которые мы подставляем ваши реквизиты и специфику работы.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">Чем согласие отличается от политики? <span class="plus"></span></button>
+            <div class="faq-a"><div class="faq-a-inner"><p>Политика — это публичный документ о том, как вы обрабатываете данные (его публикуют на сайте). Согласие — то, что даёт сам ученик/родитель. Нужны оба.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">А если у меня пока нет сайта? <span class="plus"></span></button>
+            <div class="faq-a"><div class="faq-a-inner"><p>Политику всё равно нужно опубликовать по постоянной ссылке. Подскажем простые варианты, где это разместить, чтобы выполнить требование закона.</p></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ФИНАЛЬНЫЙ CTA -->
+    <section id="contacts">
+      <div class="container">
+        <div class="final-cta reveal">
+          <div class="wm" aria-hidden="true">§</div>
+          <p class="eyebrow" style="justify-content:center;">Пора закрыть вопрос</p>
+          <h2>Защитите свою работу за один вечер</h2>
+          <p class="lead">Нажмите кнопку — подберём комплект под вашу нишу и пришлём готовые документы.</p>
+          <div class="actions">
+            <a class="btn btn-gold btn-lg" href="https://t.me/paragrafdocbot" target="_blank" rel="noopener">Подобрать в Telegram <span class="ico">→</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ФУТЕР -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <a class="brand" href="index.html"><span class="mark">§</span><span class="word">ПАРАГРАФ</span></a>
+          <p class="f-about">Готовые правовые документы для онлайн-репетиторов, преподавателей и экспертов. Готовим документы индивидуально под Вас — вы работаете спокойно.</p>
+        </div>
+        <div>
+          <h4>Разделы</h4>
+          <ul>
+            <li><a href="#prices">Цены и пакеты</a></li>
+            <li><a href="#audience">Для кого</a></li>
+            <li><a href="#how">Как заказать</a></li>
+            <li><a href="#faq">Вопросы</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Документы</h4>
+          <ul>
+            <li><a href="privacy.html">Политика конфиденциальности</a></li>
+            <li><a href="consent.html">Согласие на обработку ПДн</a></li>
+            <li><a href="offer.html">Публичная оферта</a></li>
+            <li><a href="cookie.html">Политика cookie</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Контакты</h4>
+          <ul>
+            <li><a href="https://t.me/paragrafdocbot" target="_blank" rel="noopener">Telegram: @paragrafdocbot</a></li>
+            <li><a href="mailto:paragraf.doc@yandex.com">paragraf.doc@yandex.com</a></li>
+          </ul>
+          <p class="req">Савин Андрей Евгеньевич<br/>ИНН 402714216401</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© <span data-year>2026</span> Параграф. Все права защищены.</span>
+        <nav class="legal-inline">
+          <a href="privacy.html">Политика</a>
+          <a href="consent.html">Согласие</a>
+          <a href="offer.html">Оферта</a>
+          <a href="cookie.html">Cookie</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <div class="cookie-banner" aria-live="polite">
+    <p>Мы используем файлы cookie и сервис веб-аналитики. Подробнее — в <a href="cookie.html">Политике cookie</a> и <a href="privacy.html">Политике конфиденциальности</a>.</p>
+    <button class="btn btn-gold" data-cookie-accept>Принять</button>
+  </div>
+
+  <script src="assets/js/main.js"></script>
+  <script type="module" src="assets/js/hero3d.js"></script>
+</body>
+</html>
