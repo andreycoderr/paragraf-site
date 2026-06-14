@@ -876,11 +876,12 @@ h1, h2 { text-wrap: balance; }
 .price-blob.b2 { bottom: 3%; left: 1%; width: 380px; height: 380px; opacity: 0.16; animation-delay: -6s; background: radial-gradient(circle, rgba(120, 150, 220, 0.5), transparent 70%); }
 .hero-blob.b1 { top: 14%; right: 16%; width: 540px; height: 540px; opacity: 0.16; }
 .hero-blob.b2 { bottom: 8%; right: 34%; width: 360px; height: 360px; opacity: 0.12; animation-delay: -8s; background: radial-gradient(circle, rgba(120, 150, 220, 0.5), transparent 70%); }
-/* Тёмная подложка под текстом hero — чтобы он не сливался с 3D-документами */
+/* Мягкое затемнение под текстом hero (растушёванное, без жёстких краёв),
+   чтобы текст не сливался с 3D-документами справа. */
 .hero .container::before {
   content: ""; position: absolute; z-index: -1; pointer-events: none;
-  top: -50px; bottom: -30px; left: -50px; right: 24%;
-  background: linear-gradient(100deg, var(--graphite-900) 6%, rgba(11, 12, 17, 0.86) 40%, rgba(11, 12, 17, 0) 80%);
+  inset: -140px -16% -90px -16%;
+  background: radial-gradient(68% 70% at 26% 42%, rgba(11, 12, 17, 0.9) 0%, rgba(11, 12, 17, 0.45) 46%, transparent 72%);
 }
 @media (max-width: 760px) { .hero .container::before { display: none; } }
 @keyframes morphBlob {
